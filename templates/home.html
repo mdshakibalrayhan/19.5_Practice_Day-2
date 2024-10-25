@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-center m-3">Famous Musician's And Their Album's</h1>
+<hr />
+<div class="container mt-5">
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Author</th>
+        <th scope="col">Album name</th>
+        <th scope="col">Ratings</th>
+        <th scope="col">Album release date</th>
+        {% if user.is_authenticated %}
+        <th scope="col">Edit/Delete Album</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in data.all %}
+      <tr>
+        {% if user.is_authenticated %}
+        <th scope="row">
+          <a class="text-white" href="{% url 'edit_musician' d.Author.id %}"
+            >{{d.Author.First_name}}</a
+          >
+        </th>
+        {% else %}
+        <th scope="row">{{d.Author.First_name}}</th>
+        {% endif %}
+        <td>{{d.Album_name}}</td>
+        <td>{{d.Ratings}}</td>
+        <td>{{d.Album_release_date}}</td>
+        {% if user.is_authenticated %}
+        <td>
+          <a class="btn btn-outline-warning" href="{% url 'edit_album' d.id %}"
+            >Edit</a
+          >
+          <a class="btn btn-outline-danger" href="{% url 'delete_album' d.id %}"
+            >Delete</a
+          >
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
