@@ -51,3 +51,8 @@ class RegistraionView(CreateView):
     form_class = RegistraionForm
     template_name = 'register.html'
     success_url = reverse_lazy('login')
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        return super().form_invalid(form)
